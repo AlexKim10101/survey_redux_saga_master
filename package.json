@@ -1,21 +1,31 @@
 {
-  "name": "survey",
+  "name": "survey-redux-saga",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@material-ui/core": "^4.11.3",
+    "@emotion/react": "^11.4.1",
+    "@material-ui/core": "^4.12.3",
     "@material-ui/icons": "^4.11.2",
-    "@material-ui/lab": "^4.0.0-alpha.57",
-    "@testing-library/jest-dom": "^5.11.9",
-    "@testing-library/react": "^11.2.3",
-    "@testing-library/user-event": "^12.6.2",
+    "@material-ui/lab": "^4.0.0-alpha.60",
+    "@testing-library/jest-dom": "^5.16.2",
+    "@testing-library/react": "^12.1.2",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^27.4.0",
+    "@types/node": "^16.11.24",
+    "@types/react": "^17.0.39",
+    "@types/react-dom": "^17.0.11",
     "antd": "^4.11.2",
+    "axios": "^0.27.2",
+    "lodash": "^4.17.21",
     "nanoid": "^3.2.0",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "react-scripts": "4.0.1",
-    "react-transition-group": "^4.4.1",
-    "web-vitals": "^0.2.4"
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-redux": "^8.0.2",
+    "react-scripts": "5.0.0",
+    "redux": "^4.2.0",
+    "redux-saga": "^1.2.1",
+    "typescript": "^4.5.5",
+    "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -40,5 +50,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.182"
   }
 }

@@ -64,6 +64,7 @@ const AccordionList = ({ pages, onClickAccordionItemButton }) => {
       {pages.map((item, index) => {
         return (
           <Accordion
+            key={index}
             classes={{
               root: classes.root,
               disabled: classes.disabled,
