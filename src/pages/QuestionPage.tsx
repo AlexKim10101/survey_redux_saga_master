@@ -33,7 +33,6 @@ const QuestionPage: React.FC<IQuestionPage> = ({
     currentQuestionIndex + pageQuestionCount
   );
 
-  console.log("submittedQuestions", submittedQuestions);
   return (
     <div className="all">
       <div className="title">
@@ -60,7 +59,7 @@ const QuestionPage: React.FC<IQuestionPage> = ({
           timeout={{ enter: TIMEOUT_VALUE, exit: TIMEOUT_VALUE }}
         >
           <SurveyQuestion
-            question={questions[currentQuestionIndex]}
+            questions={submittedQuestions}
             currentQuestionIndex={currentQuestionIndex}
             setAnswer={setAnswer}
             setComment={setComment}

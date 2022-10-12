@@ -142,14 +142,14 @@ export const getSurveyQuestion: React.FC<IGetSurveyQuestionProps> = ({
 };
 
 export type ISurveyQuestionProps = {
-  question: IParsedSurveyQuestion;
+  questions: IParsedSurveyQuestion[];
   currentQuestionIndex: number;
   setAnswer: ISetAnswer;
   setComment: (userComment: string) => void;
 };
 
 const SurveyQuestion: React.FC<ISurveyQuestionProps> = ({
-  question,
+  questions,
   currentQuestionIndex,
   setAnswer,
   setComment,
@@ -165,28 +165,33 @@ const SurveyQuestion: React.FC<ISurveyQuestionProps> = ({
       }}
     >
       <div className={classes.root}>
-        {getSurveyQuestion({
-          question,
-          currentQuestionIndex,
-          setAnswer,
-        })}
-        {question.comment && (
-          <TextField
-            id="outlined-multiline-static"
-            className={classes.comment}
-            InputProps={{ disableUnderline: true }}
-            label="Комментарий"
-            color="primary"
-            fullWidth
-            multiline
-            rows={6}
-            variant="filled"
-            value={question.commentValue}
-            onChange={(e) => {
-              setComment(e.target.value);
-            }}
-          />
-        )}
+        {questions.map((question) => (
+          <div>
+            {getSurveyQuestion({
+              question,
+              currentQuestionIndex,
+              setAnswer,
+            })}
+
+            {question.comment && (
+              <TextField
+                id="outlined-multiline-static"
+                className={classes.comment}
+                InputProps={{ disableUnderline: true }}
+                label="Комментарий"
+                color="primary"
+                fullWidth
+                multiline
+                rows={6}
+                variant="filled"
+                value={question.commentValue}
+                onChange={(e) => {
+                  setComment(e.target.value);
+                }}
+              />
+            )}
+          </div>
+        ))}
       </div>
     </div>
   );
