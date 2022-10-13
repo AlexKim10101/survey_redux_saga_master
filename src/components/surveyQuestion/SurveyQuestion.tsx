@@ -157,13 +157,7 @@ const SurveyQuestion: React.FC<ISurveyQuestionProps> = ({
   const classes = useStyles();
 
   return (
-    <div
-      style={{
-        position: "absolute",
-        overflowX: "hidden",
-        width: "100%",
-      }}
-    >
+    <div>
       <div className={classes.root}>
         {questions.map((question) => (
           <div>

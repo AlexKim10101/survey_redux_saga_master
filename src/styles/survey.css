@@ -1,24 +1,29 @@
 /* @import "~animate.css/animate.css"; */
 
+#root {
+  height: 100%;
+}
+
 .wrapper {
   position: relative;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  align-items: stretch;
+  /* overflow: hidden; */
 }
 
 .slider {
   position: relative;
   flex-grow: 1;
-  overflow: hidden;
-  margin-bottom: 140px;
+  overflow-x: hidden;
+  /* margin-bottom: 140px; */
 }
 
 .slider-item {
-  position: absolute;
-  overflow-x: hidden;
+  /* position: absolute; */
+  /* overflow-x: hidden; */
   width: 100%;
   height: 100%;
 }

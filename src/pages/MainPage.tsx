@@ -19,7 +19,6 @@ import { changeSlideMoveDirection, setActiveSurveyCampaning } from "../duck";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      position: "absolute",
       width: "100%",
       marginTop: "6px",
       backgroundColor: theme.palette.background.paper,

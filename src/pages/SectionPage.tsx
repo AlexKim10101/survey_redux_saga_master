@@ -18,7 +18,6 @@ import { connect, ConnectedProps } from "react-redux";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      position: "absolute",
       width: "100%",
       marginTop: "6px",
       backgroundColor: theme.palette.background.paper,
