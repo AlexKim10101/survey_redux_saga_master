@@ -22,8 +22,6 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
   },
   appBar: {
-    top: "auto",
-    bottom: 0,
     background: "#46ACAF",
   },
   grow: {
@@ -77,7 +75,7 @@ const AppBarBottom: React.FC<IAppBarBottomProps> = ({
   const classes = useStyles();
 
   return (
-    <AppBar position="fixed" className={classes.appBar}>
+    <AppBar position="static" className={classes.appBar}>
       <Toolbar className={classes.toolbar}>
         {currentPage === "question" && currentQuestionIndex !== 0 && (
           <LeftBottomButton />

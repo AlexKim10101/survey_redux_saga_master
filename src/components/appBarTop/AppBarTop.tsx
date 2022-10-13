@@ -41,14 +41,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// export type IAppBarTop = {
-//   currentPage: IPageName;
-//   openMainPage: () => void;
-//   openSectionPage: () => void;
-//   openCampaningPage: () => void;
-//   setSlideMoveDirection: (slideMoveDirection: ISlideMoveDirection) => void;
-// };
-
 const AppBarTop: React.FC<IAppBarTopProps> = ({
   currentPage,
   openMainPage,
@@ -57,12 +49,6 @@ const AppBarTop: React.FC<IAppBarTopProps> = ({
   openCampaningPage,
 }) => {
   const classes = useStyles();
-
-  // const buttons = {
-  //   section: {},
-  //   question: {},
-  //   answer: {},
-  // };
 
   type ITooltipLeftButton = {
     currentPage: IPageName;

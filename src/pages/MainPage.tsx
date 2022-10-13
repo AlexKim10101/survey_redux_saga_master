@@ -20,7 +20,6 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       width: "100%",
-      marginTop: "6px",
       backgroundColor: theme.palette.background.paper,
     },
     index: {
