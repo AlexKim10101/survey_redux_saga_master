@@ -98,11 +98,10 @@ const mapStateToProps = (state: IState) => {
   };
 };
 
-const mapDispatchToProps = (_dispatch: Dispatch, props: IAppBarBottom) => {
-  const sendData = props.sendData;
+const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
     sendData: () => {
-      sendData();
+      dispatch({ type: "SEND_SURVEY_DATA" });
     },
   };
 };

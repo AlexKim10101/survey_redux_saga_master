@@ -15,7 +15,6 @@ const SurveyComponent: React.FC<ISurveyComponentProps> = ({
   currentPage,
   slideMoveDirection,
   fetchData,
-  sendData,
 }) => {
   useEffect(() => {
     fetchData();
@@ -44,7 +43,7 @@ const SurveyComponent: React.FC<ISurveyComponentProps> = ({
           </div>
         </CSSTransition>
       </TransitionGroup>
-      {currentPage !== "main" && <AppBarBottom sendData={sendData} />}
+      {currentPage !== "main" && <AppBarBottom />}
     </div>
   );
 };
@@ -60,9 +59,6 @@ const mapDispathToProps = (dispatch: Dispatch) => {
   return {
     fetchData: () => {
       dispatch({ type: "FETCH_SURVEY_DATA" });
-    },
-    sendData: () => {
-      dispatch({ type: "SEND_SURVEY_DATA" });
     },
   };
 };
