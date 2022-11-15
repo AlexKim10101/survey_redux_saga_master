@@ -22,6 +22,7 @@ import ProgressCircular from "../components/progressCircular/ProgressCircular";
 import { connect, ConnectedProps } from "react-redux";
 import { Dispatch } from "redux";
 import { changeSlideMoveDirection, setActiveSection } from "../duck";
+import { selectCurrentCampaning } from "../duck/selectors";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -154,10 +155,9 @@ const SurveyCampaningPage: React.FC<ISurveyCampaningPage> = ({
 };
 
 const mapStateToProps = (state: IState) => {
-  const currentSurveyCampaningIndex = state.currentSurveyCampaningIndex;
+  const currentCampaning = selectCurrentCampaning(state);
   return {
-    sections: state.data!.surveyCampanings[currentSurveyCampaningIndex]
-      .sections,
+    sections: currentCampaning.sections,
   };
 };
 

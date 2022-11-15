@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useLayoutEffect, useRef } from "react";
 import SurveyQuestion from "../components/surveyQuestion/SurveyQuestion";
 import Typography from "@material-ui/core/Typography";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
@@ -15,6 +15,7 @@ import { connect, ConnectedProps } from "react-redux";
 import { Dispatch } from "redux";
 import { applyRule, setUserAnswer, setUserComment } from "../duck";
 import { ruleIsActive } from "../utils/ruleIsActive";
+import { selectCurrentSection } from "../duck/selectors";
 
 export type IQuestionPage = ConnectedProps<typeof connector>;
 
@@ -32,9 +33,16 @@ const QuestionPage: React.FC<IQuestionPage> = ({
     currentQuestionIndex,
     currentQuestionIndex + pageQuestionCount
   );
+  console.log("render");
+
+  const ref = useRef<HTMLDivElement>(null);
+
+  useLayoutEffect(() => {
+    ref && ref.current && ref.current.scrollIntoView();
+  }, [currentQuestionIndex]);
 
   return (
-    <div className="all">
+    <div ref={ref} className="all">
       <div className="title">
         <Typography variant="body1" gutterBottom>
           {name}
@@ -71,17 +79,20 @@ const QuestionPage: React.FC<IQuestionPage> = ({
 };
 
 const mapStateToProps = (state: IState) => {
-  const currentSurveyCampaningIndex = state.currentSurveyCampaningIndex;
-  const currentSectionCampaningIndex = state.currentSectionIndex;
-  const section = state.data!.surveyCampanings[currentSurveyCampaningIndex]
-    .sections[currentSectionCampaningIndex];
+  const section = selectCurrentSection(state);
+  const {
+    currentPage,
+    currentQuestionIndex,
+    slideMoveDirection,
+    pageQuestionCount,
+  } = state;
   return {
-    currentPage: state.currentPage,
-    questions: section.questions,
     name: section.name,
-    currentQuestionIndex: state.currentQuestionIndex,
-    slideMoveDirection: state.slideMoveDirection,
-    pageQuestionCount: state.pageQuestionCount,
+    questions: section.questions,
+    currentPage,
+    currentQuestionIndex,
+    slideMoveDirection,
+    pageQuestionCount,
   };
 };
 

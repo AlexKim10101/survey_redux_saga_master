@@ -68,6 +68,7 @@ export const getSurveyQuestion: React.FC<IGetSurveyQuestionProps> = ({
   currentQuestionIndex,
   setAnswer,
 }) => {
+  console.log(question);
   switch (question.type) {
     case "complex": {
       return (
@@ -159,11 +160,11 @@ const SurveyQuestion: React.FC<ISurveyQuestionProps> = ({
   return (
     <div>
       <div className={classes.root}>
-        {questions.map((question) => (
-          <div>
+        {questions.map((question, index) => (
+          <div key={index}>
             {getSurveyQuestion({
               question,
-              currentQuestionIndex,
+              currentQuestionIndex: question.index,
               setAnswer,
             })}
 
@@ -174,9 +175,9 @@ const SurveyQuestion: React.FC<ISurveyQuestionProps> = ({
                 InputProps={{ disableUnderline: true }}
                 label="Комментарий"
                 color="primary"
+                minRows="6"
                 fullWidth
                 multiline
-                rows={6}
                 variant="filled"
                 value={question.commentValue}
                 onChange={(e) => {

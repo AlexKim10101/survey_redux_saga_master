@@ -15,6 +15,7 @@ import {
 import { ISlideMoveDirection, IState } from "../duck/fakeData/surveyData";
 import { isCampaningDone } from "../utils/findFirstNotDoneCampaning";
 import { changeSlideMoveDirection, setActiveSurveyCampaning } from "../duck";
+import { selectData } from "../duck/selectors";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -111,7 +112,8 @@ const MainPage: React.FC<IMainPage> = ({
 };
 
 const mapStateToProps = (state: IState) => {
-  return { surveyCampanings: state.data!.surveyCampanings };
+  const data = selectData(state);
+  return { surveyCampanings: data.surveyCampanings };
 };
 
 const mapDispathToProps = (dispatch: Dispatch) => {

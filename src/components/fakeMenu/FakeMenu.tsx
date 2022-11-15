@@ -19,7 +19,7 @@ const FakeMenu = () => {
   };
 
   return (
-    <>
+    <div>
       <div>
         <Tooltip title="Notifications">
           <IconButton
@@ -56,7 +56,7 @@ const FakeMenu = () => {
         <MenuItem onClick={handleClose}>My account</MenuItem>
         <MenuItem onClick={handleClose}>Logout</MenuItem>
       </Menu>
-    </>
+    </div>
   );
 };
 

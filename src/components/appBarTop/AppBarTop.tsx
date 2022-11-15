@@ -144,7 +144,6 @@ const AppBarTop: React.FC<IAppBarTopProps> = ({
               />
             )}
           </div>
-          <FakeMenu />
         </Toolbar>
       </AppBar>
     </div>

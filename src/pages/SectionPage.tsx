@@ -14,6 +14,7 @@ import DoneIcon from "@material-ui/icons/Done";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import { changeSlideMoveDirection, setActiveQuestion } from "../duck";
 import { connect, ConnectedProps } from "react-redux";
+import { selectCurrentSection } from "../duck/selectors";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -50,12 +51,12 @@ export type ISectionPage = ConnectedProps<typeof connector>;
 
 const SectionPage: React.FC<ISectionPage> = ({
   section,
-  questions,
   setCurrentQuestion,
   setSlideMoveDirection,
   showAnswer,
 }) => {
   const classes = useStyles();
+  const questions = section.questions;
 
   const primaryText = (
     questionText: string,
@@ -159,14 +160,10 @@ const SectionPage: React.FC<ISectionPage> = ({
 };
 
 const mapStateToProps = (state: IState) => {
-  const currentSurveyCampaningIndex = state.currentSurveyCampaningIndex;
-  const currentSectionCampaningIndex = state.currentSectionIndex;
-  const section = state.data!.surveyCampanings[currentSurveyCampaningIndex]
-    .sections[currentSectionCampaningIndex];
+  const section = selectCurrentSection(state);
   const showAnswer = state.currentPage === "answer";
   return {
     section: section,
-    questions: section.questions,
     showAnswer: showAnswer,
   };
 };

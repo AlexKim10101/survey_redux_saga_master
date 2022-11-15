@@ -2,8 +2,8 @@ import { AxiosError } from "axios";
 import { call, put, select, takeEvery, takeLatest } from "redux-saga/effects";
 import { setError, setNewState } from "../../duck";
 import { IData, IState } from "../../duck/fakeData/surveyData";
+import { selectRequestAnswerData } from "../../duck/selectors";
 import { getInitState } from "../../utils/getInitState";
-import { selectData } from "../../utils/selectors/selectors";
 import { fethData, sendData } from "../api/api";
 
 type IResult = { data: IData };
@@ -28,7 +28,7 @@ function* fetchSurveyData() {
 }
 
 function* sendSurveyData() {
-  const { data, params } = yield select(selectData);
+  const { data, params } = yield select(selectRequestAnswerData);
 
   try {
     const result: {} = yield call(() => sendData({ data, params }));
