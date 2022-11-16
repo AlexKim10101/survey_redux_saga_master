@@ -99,7 +99,13 @@ const mapStateToProps = (state: IState) => {
 const mapDispathToProps = (dispatch: Dispatch) => {
   return {
     setAnswer: (q: IParsedSurveyQuestion) => {
-      dispatch(setUserAnswer({ userAnswer: q.userAnswer, questionId: q.id }));
+      dispatch(
+        setUserAnswer({
+          userAnswer: q.userAnswer,
+          questionId: q.id,
+          questionIndex: q.index,
+        })
+      );
       q.rules.forEach((rule) => {
         const ruleValue = ruleIsActive(q, rule);
         dispatch(applyRule({ rule, ruleValue }));

@@ -24,6 +24,7 @@ import {
   DEFAULT_MOVE_DIRECTION,
   DEFAULT_PAGE_QUESTION_COUNT,
 } from "../utils/const";
+import { selectCurrentSection } from "./selectors";
 
 const initialState: IState = {
   data: null,
@@ -124,16 +125,28 @@ export const surveyReducer = (
       const currentSurveyCampaningIndex = state.currentSurveyCampaningIndex;
       const currentSectionIndex = state.currentSectionIndex;
       const currentQuestionIndex = state.currentQuestionIndex;
+      // const currentQuestionIndex: number = Number(action.payload.questionId);
+      // console.log("currentQuestionIndex1", currentQuestionIndex1);
+      // console.log("currentQuestionIndex", action.payload.questionId);
+      const {
+        questionId,
+        questionIndex,
+        parentIndex,
+        userAnswer,
+      } = action.payload;
 
-      const currentQuestion = state.data!.surveyCampanings[
-        currentSurveyCampaningIndex
-      ].sections[currentSectionIndex].questions[currentQuestionIndex];
+      const currentQuestion = selectCurrentSection(state).questions[
+        questionIndex
+      ];
+      // const currentQuestion = state.data!.surveyCampanings[
+      //   currentSurveyCampaningIndex
+      // ].sections[currentSectionIndex].questions[currentQuestionIndex];
 
       const currentQuestionDone = questionValidation(
         action.payload.userAnswer,
         currentQuestion
       );
-      const isChildrenAnswer = action.payload.questionId !== currentQuestion.id;
+      const isChildrenAnswer = typeof parentIndex === "number";
 
       return {
         ...state,
@@ -153,17 +166,15 @@ export const surveyReducer = (
                         currentSurveyCampaningIndex
                       ].sections[currentSectionIndex].questions.map(
                         (question, index) => {
-                          if (index === currentQuestionIndex) {
+                          if (index === questionIndex) {
                             if (isChildrenAnswer) {
                               return {
                                 ...question,
                                 children: {
                                   ...question.children,
-                                  [action.payload.questionId]: {
-                                    ...question.children[
-                                      action.payload.questionId
-                                    ],
-                                    userAnswer: action.payload.userAnswer,
+                                  [questionId]: {
+                                    ...question.children[questionId],
+                                    userAnswer: userAnswer,
                                     questionDone: currentQuestionDone,
                                   },
                                 },
@@ -171,7 +182,7 @@ export const surveyReducer = (
                             }
                             return {
                               ...question,
-                              userAnswer: action.payload.userAnswer,
+                              userAnswer: userAnswer,
                               questionDone: currentQuestionDone,
                             };
                           }

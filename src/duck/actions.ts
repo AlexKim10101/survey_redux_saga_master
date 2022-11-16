@@ -70,6 +70,8 @@ export const setActiveQuestion = (payload: { activeQuestionIndex: number }) =>
 export const setUserAnswer = (payload: {
   userAnswer: IUserAnswer;
   questionId: string;
+  questionIndex: number;
+  parentIndex?: number;
 }) =>
   <const>{
     type: SET_USER_ANSWER,
