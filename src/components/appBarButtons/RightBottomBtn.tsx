@@ -13,9 +13,11 @@ import {
   setActiveSection,
 } from "../../duck";
 import ForwardButton from "../common/ForwardButton";
-import { IAppBarBottom } from "../appBarBottom/AppBarBottom";
 import { isCampaningDone } from "../../utils/findFirstNotDoneCampaning";
 
+type IRightBottomButton = {
+  sendData: () => void;
+};
 type IRightBottomButtonProps = ConnectedProps<typeof connector>;
 
 const RightBottomButton: React.FC<IRightBottomButtonProps> = ({
@@ -153,7 +155,7 @@ const mapStateToProps = (state: IState) => {
   };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch, props: IAppBarBottom) => {
+const mapDispatchToProps = (dispatch: Dispatch, props: IRightBottomButton) => {
   const { sendData } = props;
   return {
     setSlideMoveDirection: (slideMoveDirection: ISlideMoveDirection) => {

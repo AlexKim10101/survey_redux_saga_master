@@ -63,10 +63,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export type IAppBarBottom = {
-  sendData: () => void;
-};
-
 const AppBarBottom: React.FC<IAppBarBottomProps> = ({
   currentPage,
   currentQuestionIndex,
@@ -74,14 +70,15 @@ const AppBarBottom: React.FC<IAppBarBottomProps> = ({
 }) => {
   const classes = useStyles();
 
+  const showLeftBottomBtn =
+    currentPage === "question" && currentQuestionIndex !== 0;
+
+  const showRightBottomBtn = currentPage !== "error";
   return (
     <AppBar position="static" className={classes.appBar}>
       <Toolbar className={classes.toolbar}>
-        {currentPage === "question" && currentQuestionIndex !== 0 && (
-          <LeftBottomButton />
-        )}
-
-        {currentPage !== "error" && <RightBottomButton sendData={sendData} />}
+        {showLeftBottomBtn && <LeftBottomButton />}
+        {showRightBottomBtn && <RightBottomButton sendData={sendData} />}
       </Toolbar>
     </AppBar>
   );
