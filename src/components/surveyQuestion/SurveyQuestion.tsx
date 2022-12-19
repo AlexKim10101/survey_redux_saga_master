@@ -25,11 +25,12 @@ const useStyles = makeStyles((theme) => ({
   },
   surveyQuestionElementStyles: {
     marginTop: "40px",
+    marginBottom: "40px",
   },
   comment: {
     "&.MuiFormControl-root": {
-      marginTop: "40px",
-      marginBottom: "80px",
+      marginTop: "20px",
+      marginBottom: "40px",
     },
 
     "& .MuiInputLabel-root": {
@@ -68,7 +69,6 @@ export const getSurveyQuestion: React.FC<IGetSurveyQuestionProps> = ({
   currentQuestionIndex,
   setAnswer,
 }) => {
-  console.log(question);
   switch (question.type) {
     case "complex": {
       return (
