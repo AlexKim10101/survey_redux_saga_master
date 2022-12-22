@@ -25,12 +25,10 @@ const useStyles = makeStyles((theme) => ({
   },
   surveyQuestionElementStyles: {
     marginTop: "40px",
-    marginBottom: "40px",
   },
   comment: {
     "&.MuiFormControl-root": {
       marginTop: "20px",
-      marginBottom: "40px",
     },
 
     "& .MuiInputLabel-root": {
@@ -72,69 +70,57 @@ export const getSurveyQuestion: React.FC<IGetSurveyQuestionProps> = ({
   switch (question.type) {
     case "complex": {
       return (
-        <div className="surveyQuestionElementStyles">
-          <ComplexQuestion
-            currentQuestionIndex={currentQuestionIndex}
-            question={question}
-            setAnswer={setAnswer}
-          />
-        </div>
+        <ComplexQuestion
+          currentQuestionIndex={currentQuestionIndex}
+          question={question}
+          setAnswer={setAnswer}
+        />
       );
     }
     case "textQuestion": {
       return (
-        <div className="surveyQuestionElementStyles">
-          <QuestionText
-            currentQuestionIndex={currentQuestionIndex}
-            question={question}
-            setAnswer={setAnswer}
-          />
-        </div>
+        <QuestionText
+          currentQuestionIndex={currentQuestionIndex}
+          question={question}
+          setAnswer={setAnswer}
+        />
       );
     }
     case "textMessage": {
       return (
-        <div className="surveyQuestionElementStyles">
-          <Message
-            currentQuestionIndex={currentQuestionIndex}
-            question={question}
-            setAnswer={setAnswer}
-          />
-        </div>
+        <Message
+          currentQuestionIndex={currentQuestionIndex}
+          question={question}
+          setAnswer={setAnswer}
+        />
       );
     }
 
     case "checkbox":
       return (
-        <div className="surveyQuestionElementStyles">
-          <QuestionCheckbox
-            currentQuestionIndex={currentQuestionIndex}
-            question={question}
-            setAnswer={setAnswer}
-          />
-        </div>
+        <QuestionCheckbox
+          currentQuestionIndex={currentQuestionIndex}
+          question={question}
+          setAnswer={setAnswer}
+        />
       );
 
     case "radio":
       return (
-        <div className="surveyQuestionElementStyles">
-          <QuestionRadio
-            currentQuestionIndex={currentQuestionIndex}
-            question={question}
-            setAnswer={setAnswer}
-          />
-        </div>
+        <QuestionRadio
+          currentQuestionIndex={currentQuestionIndex}
+          question={question}
+          setAnswer={setAnswer}
+        />
       );
 
     case "rating":
       return (
-        <div className="surveyQuestionElementStyles">
-          <QuestionRating
-            currentQuestionIndex={currentQuestionIndex}
-            question={question}
-            setAnswer={setAnswer}
-          />
-        </div>
+        <QuestionRating
+          currentQuestionIndex={currentQuestionIndex}
+          question={question}
+          setAnswer={setAnswer}
+        />
       );
 
     default:
@@ -161,7 +147,7 @@ const SurveyQuestion: React.FC<ISurveyQuestionProps> = ({
     <div>
       <div className={classes.root}>
         {questions.map((question, index) => (
-          <div key={index}>
+          <div key={index} className={classes.surveyQuestionElementStyles}>
             {getSurveyQuestion({
               question,
               currentQuestionIndex: question.index,

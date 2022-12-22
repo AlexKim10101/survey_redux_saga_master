@@ -22,8 +22,7 @@ const useStyles = makeStyles((theme) => ({
 
   comment: {
     "&.MuiFormControl-root": {
-      marginTop: "40px",
-      marginBottom: "80px",
+      marginTop: "20px",
     },
 
     "& .MuiInputLabel-root": {
@@ -85,7 +84,7 @@ const QuestionText: React.FC<IQuestionText> = ({
           color="primary"
           fullWidth
           multiline
-          rows={6}
+          minRows={6}
           variant="filled"
           value={textFieldValue}
           onChange={(e) => {
