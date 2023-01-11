@@ -1,21 +1,21 @@
-import { ISurveyQuestion, IUserAnswer } from "../duck/fakeData/surveyData";
+import { ISurveyQuestion, IUserAnswer } from '../duck/fakeData/surveyData'
 
 export const questionValidation = (
-  userAnswer: IUserAnswer,
-  question: ISurveyQuestion
+	userAnswer: IUserAnswer,
+	question: ISurveyQuestion
 ): boolean => {
-  if (
-    question.type === "checkbox" ||
-    question.type === "radio" ||
-    question.type === "textQuestion"
-  ) {
-    const answer = userAnswer.length;
-    return answer > 0;
-  }
+	if (
+		question.type === 'checkbox' ||
+		question.type === 'radio' ||
+		question.type === 'textQuestion'
+	) {
+		const answer = userAnswer.length
+		return answer > 0
+	}
 
-  if (question.type === "textMessage") {
-    return true;
-  }
+	if (question.type === 'textMessage') {
+		return true
+	}
 
-  return true;
-};
+	return true
+}

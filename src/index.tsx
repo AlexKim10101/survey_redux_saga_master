@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
+import { BrowserRouter } from "react-router-dom";
 import { store } from "./store/store";
 import "./styles/index.css";
 import SurveyComponent from "./SurveyComponent";
@@ -8,9 +9,11 @@ import SurveyComponent from "./SurveyComponent";
 // ReactDOM.render(<SurveyComponent />, document.getElementById("root"));
 
 ReactDOM.render(
-  <Provider store={store}>
-    <SurveyComponent />
-  </Provider>,
+  <BrowserRouter>
+    <Provider store={store}>
+      <SurveyComponent />
+    </Provider>
+  </BrowserRouter>,
   document.getElementById("root")
 );
 
