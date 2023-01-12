@@ -1,31 +1,30 @@
-import React from "react"
-import { Routes, Route, useLocation, useNavigate } from "react-router-dom"
+import React, { useEffect } from "react";
+import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 
-import { IPageName } from "./duck/fakeData/surveyData"
-import MainPage from "./pages/MainPage"
-import SectionPage from "./pages/SectionPage"
-import QuestionPage from "./pages/QuestionPage"
-import SurveyCampaningPage from "./pages/CampaningPage"
-import ErrorPage from "./pages/ErrorPage"
+import { IPageName } from "./duck/fakeData/surveyData";
+import MainPage from "./pages/MainPage";
+import SectionPage from "./pages/SectionPage";
+import QuestionPage from "./pages/QuestionPage";
+import SurveyCampaningPage from "./pages/CampaningPage";
+import ErrorPage from "./pages/ErrorPage";
 
 type IPageRenderProps = {
-	currentPage: IPageName
-}
+	// currentPage: IPageName
+	// pathname:string;
+};
 
-const PageRender: React.FC<IPageRenderProps> = ({ currentPage }) => {
-	console.log(currentPage)
-	console.log("location", useLocation())
-	const navigate = useNavigate()
-
-	// useLocation();
+const PageRender: React.FC<IPageRenderProps> = () => {
 	return (
 		<Routes>
 			<Route path="/" element={<MainPage />} />
 			<Route path="/campaning" element={<SurveyCampaningPage />} />
+			<Route path="/section" element={<SectionPage showAnswer={false} />} />
+			<Route path="/question" element={<QuestionPage />} />
+			<Route path="/answer" element={<SectionPage showAnswer={true} />} />
 
 			<Route path="*" element={<div>not found</div>} />
 		</Routes>
-	)
+	);
 
 	// switch (currentPage) {
 	//   case "main": {
@@ -52,6 +51,6 @@ const PageRender: React.FC<IPageRenderProps> = ({ currentPage }) => {
 	//     return <div>Page not found</div>;
 	//   }
 	// }
-}
+};
 
-export default PageRender
+export default PageRender;

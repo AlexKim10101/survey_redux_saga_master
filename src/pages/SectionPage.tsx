@@ -1,20 +1,21 @@
-import React from "react"
-import { Dispatch } from "redux"
-import { makeStyles, Theme, createStyles } from "@material-ui/core/styles"
-import Typography from "@material-ui/core/Typography"
+import React from "react";
+import { Dispatch } from "redux";
+import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
 import {
 	IParsedSurveyQuestion,
 	ISection,
 	ISlideMoveDirection,
 	IState,
 	ISurveyQuestion,
-} from "../duck/fakeData/surveyData"
-import { Divider, List, ListItem, ListItemText } from "@material-ui/core"
-import DoneIcon from "@material-ui/icons/Done"
-import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos"
-import { changeSlideMoveDirection, setActiveQuestion } from "../duck"
-import { connect, ConnectedProps } from "react-redux"
-import { selectCurrentSection } from "../duck/selectors"
+} from "../duck/fakeData/surveyData";
+import { Divider, List, ListItem, ListItemText } from "@material-ui/core";
+import DoneIcon from "@material-ui/icons/Done";
+import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
+import { changeSlideMoveDirection, setActiveQuestion } from "../duck";
+import { connect, ConnectedProps } from "react-redux";
+import { selectCurrentSection } from "../duck/selectors";
+import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -45,18 +46,20 @@ const useStyles = makeStyles((theme: Theme) =>
 			marginTop: "10px",
 		},
 	})
-)
+);
 
-export type ISectionPage = ConnectedProps<typeof connector>
+export type ISectionPage = ConnectedProps<typeof connector> & {
+	showAnswer: boolean;
+};
 
 const SectionPage: React.FC<ISectionPage> = ({
 	section,
 	setCurrentQuestion,
-	setSlideMoveDirection,
 	showAnswer,
 }) => {
-	const classes = useStyles()
-	const questions = section.questions
+	const classes = useStyles();
+	const questions = section.questions;
+	const navigate = useNavigate();
 
 	const primaryText = (
 		questionText: string,
@@ -71,8 +74,8 @@ const SectionPage: React.FC<ISectionPage> = ({
 					<span className={classes.requiredQuestion}>*</span>
 				) : null}
 			</div>
-		)
-	}
+		);
+	};
 
 	const secondaryText = (question: ISurveyQuestion) => {
 		return (
@@ -95,8 +98,8 @@ const SectionPage: React.FC<ISectionPage> = ({
 					)}
 				</span>
 			</span>
-		)
-	}
+		);
+	};
 	return (
 		<div className={classes.root}>
 			<div className={classes.title}>
@@ -113,8 +116,8 @@ const SectionPage: React.FC<ISectionPage> = ({
 							<div key={index}>
 								<ListItem
 									onClick={() => {
-										setCurrentQuestion(index)
-										setSlideMoveDirection("right-to-left")
+										setCurrentQuestion(index);
+										navigate("/question");
 									}}
 									button
 								>
@@ -151,34 +154,31 @@ const SectionPage: React.FC<ISectionPage> = ({
 								</ListItem>
 								<Divider />
 							</div>
-						)
+						);
 					})}
 				</List>
 			)}
 		</div>
-	)
-}
+	);
+};
 
-const mapStateToProps = (state: IState) => {
-	const section = selectCurrentSection(state)
-	const showAnswer = state.currentPage === "answer"
+const mapStateToProps = (state: IState, props: { showAnswer: boolean }) => {
+	const section = selectCurrentSection(state);
+	const showAnswer = state.currentPage === "answer";
 	return {
-		section: section,
-		showAnswer: showAnswer,
-	}
-}
+		section,
+		showAnswer,
+	};
+};
 
 const mapDispathToProps = (dispatch: Dispatch) => {
 	return {
 		setCurrentQuestion: (activeQuestionIndex: number) => {
-			dispatch(setActiveQuestion({ activeQuestionIndex }))
+			dispatch(setActiveQuestion({ activeQuestionIndex }));
 		},
-		setSlideMoveDirection: (slideMoveDirection: ISlideMoveDirection) => {
-			dispatch(changeSlideMoveDirection({ slideMoveDirection }))
-		},
-	}
-}
+	};
+};
 
-const connector = connect(mapStateToProps, mapDispathToProps)
+const connector = connect(mapStateToProps, mapDispathToProps);
 
-export default connector(SectionPage)
+export default connector(SectionPage);

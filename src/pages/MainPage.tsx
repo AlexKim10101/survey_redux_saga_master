@@ -1,22 +1,22 @@
-import React from "react"
-import { connect, ConnectedProps } from "react-redux"
-import { Dispatch } from "redux"
-import { Divider, List, ListItem, ListItemText } from "@material-ui/core"
-import DoneIcon from "@material-ui/icons/Done"
-import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos"
-import Typography from "@material-ui/core/Typography"
-import Button from "@material-ui/core/Button"
+import React from "react";
+import { connect, ConnectedProps } from "react-redux";
+import { Dispatch } from "redux";
+import { Divider, List, ListItem, ListItemText } from "@material-ui/core";
+import DoneIcon from "@material-ui/icons/Done";
+import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
+import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
 import {
 	makeStyles,
 	Theme,
 	withStyles,
 	createStyles,
-} from "@material-ui/core/styles"
-import { ISlideMoveDirection, IState } from "../duck/fakeData/surveyData"
-import { isCampaningDone } from "../utils/findFirstNotDoneCampaning"
-import { changeSlideMoveDirection, setActiveSurveyCampaning } from "../duck"
-import { selectData } from "../duck/selectors"
-import { useNavigate } from "react-router-dom"
+} from "@material-ui/core/styles";
+import { ISlideMoveDirection, IState } from "../duck/fakeData/surveyData";
+import { isCampaningDone } from "../utils/findFirstNotDoneCampaning";
+import { changeSlideMoveDirection, setActiveSurveyCampaning } from "../duck";
+import { selectData } from "../duck/selectors";
+import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -47,25 +47,24 @@ const useStyles = makeStyles((theme: Theme) =>
 			marginTop: "10px",
 		},
 	})
-)
+);
 const ColorButton = withStyles(() => ({
 	root: {
 		color: "#ffffff",
 		backgroundColor: "#46acaf",
 		margin: 0,
 	},
-}))(Button)
+}))(Button);
 
-export type IMainPage = ConnectedProps<typeof connector>
+export type IMainPage = ConnectedProps<typeof connector>;
 
 const MainPage: React.FC<IMainPage> = ({
 	surveyCampanings,
 	selectSurveyCampaning,
-	setSlideMoveDirection,
 }) => {
-	const classes = useStyles()
+	const classes = useStyles();
 
-	const navigate = useNavigate()
+	const navigate = useNavigate();
 	return (
 		<div className={classes.root}>
 			<div className={classes.title}>
@@ -75,16 +74,15 @@ const MainPage: React.FC<IMainPage> = ({
 			</div>
 			<List component="nav" aria-label="secondary mailbox folders">
 				{surveyCampanings.map((campaning, index) => {
-					const campaningIsDone = isCampaningDone(campaning)
+					const campaningIsDone = isCampaningDone(campaning);
 					return (
 						<div key={index}>
 							<ListItem
 								onClick={() => {
-									selectSurveyCampaning(index)
-									setSlideMoveDirection("right-to-left")
-									// navigate("campaning", {
-									// 	state: { campaningId: campaning.id },
-									// })
+									selectSurveyCampaning(index);
+									navigate("campaning", {
+										state: { campaningId: campaning.id },
+									});
 								}}
 								button
 							>
@@ -110,29 +108,26 @@ const MainPage: React.FC<IMainPage> = ({
 							</ListItem>
 							<Divider />
 						</div>
-					)
+					);
 				})}
 			</List>
 		</div>
-	)
-}
+	);
+};
 
 const mapStateToProps = (state: IState) => {
-	const data = selectData(state)
-	return { surveyCampanings: data.surveyCampanings }
-}
+	const data = selectData(state);
+	return { surveyCampanings: data.surveyCampanings };
+};
 
 const mapDispathToProps = (dispatch: Dispatch) => {
 	return {
 		selectSurveyCampaning: (activeSurveyCampaningIndex: number) => {
-			dispatch(setActiveSurveyCampaning({ activeSurveyCampaningIndex }))
+			dispatch(setActiveSurveyCampaning({ activeSurveyCampaningIndex }));
 		},
-		setSlideMoveDirection: (slideMoveDirection: ISlideMoveDirection) => {
-			dispatch(changeSlideMoveDirection({ slideMoveDirection }))
-		},
-	}
-}
+	};
+};
 
-const connector = connect(mapStateToProps, mapDispathToProps)
+const connector = connect(mapStateToProps, mapDispathToProps);
 
-export default connector(MainPage)
+export default connector(MainPage);
