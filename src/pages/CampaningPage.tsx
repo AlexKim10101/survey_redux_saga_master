@@ -11,17 +11,12 @@ import AccordionSummary from "@material-ui/core/AccordionSummary";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import AppBarTop from "../components/appBarTop/AppBarTop";
 import ProgressLinear from "../components/progressLinear/ProgressLinear";
-import {
-	ISection,
-	ISlideMoveDirection,
-	IState,
-} from "../duck/fakeData/surveyData";
+import { IState } from "../duck/fakeData/surveyData";
 import ProgressCircular from "../components/progressCircular/ProgressCircular";
 import { connect, ConnectedProps } from "react-redux";
 import { Dispatch } from "redux";
-import { changeSlideMoveDirection, setActiveSection } from "../duck";
+import { setActiveSection } from "../duck";
 import { selectCurrentCampaning } from "../duck/selectors";
 import { useNavigate } from "react-router-dom";
 

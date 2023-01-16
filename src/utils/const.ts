@@ -1,3 +1,5 @@
+import { IPathname } from "../survey.types";
+
 export const DEFAULT_CURRENT_USER_INDEX = 0;
 export const DEFAULT_CURRENT_QUESTION_INDEX = 0;
 export const DEFAULT_CURRENT_PAGE = "main";
@@ -13,4 +15,20 @@ export const PATHNAME_PRIORITY_DICT = {
 	"/section": 2,
 	"/question": 3,
 	"/answer": 4,
+};
+
+export const PATHNAME_PRIORITY_ARR: IPathname[] = [
+	"/",
+	"/campaning",
+	"/section",
+	"/question",
+	"/answer",
+];
+
+export const LINK_BACK_TEXT_DICT = {
+	"/": "Что-то пошло не так",
+	"/campaning": "К списку кампаний",
+	"/section": "К разделу",
+	"/question": "К списку",
+	"/answer": "К ответам",
 };

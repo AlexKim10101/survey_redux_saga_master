@@ -34,7 +34,7 @@ const SurveyComponent: React.FC<ISurveyComponentProps> = ({
 
 	return (
 		<div className="wrapper">
-			<AppBarTop />
+			<AppBarTop currentLocation={currentLocation} />
 			<TransitionGroup
 				className="slider"
 				childFactory={child =>
