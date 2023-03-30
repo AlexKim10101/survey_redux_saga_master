@@ -12,6 +12,8 @@ export const selectCurrentQuestionIndex = (state: IState) =>
 
 export const selectData = (state: IState) => state.data!;
 
+export const selectBackendData = (state: IState) => state.backendData!
+
 export const selectRequestAnswerData = (state: IState) => {
   return { data: state.data, params: state.params };
 };
@@ -33,3 +35,14 @@ export const selectCurrentQuestion = createSelector(
   selectCurrentQuestionIndex,
   (section, index) => section.questions[index]
 );
+
+export const selectCurrentPage = createSelector(selectBackendData, 
+  selectCurrentSectionIndex,
+  (data, index)=>data.pages[index]);
+
+
+/////
+
+
+
+

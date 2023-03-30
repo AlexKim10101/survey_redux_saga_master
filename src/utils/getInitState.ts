@@ -6,7 +6,8 @@ import {
 	IState,
 	ISurveyCampaning,
 	ISurveyQuestion,
-} from "../duck/fakeData/surveyData"
+} from "../duck/fakeData/surveyData";
+import { IBackendData } from "../survey.types";
 import {
 	DEFAULT_CURRENT_USER_INDEX,
 	DEFAULT_CURRENT_PAGE,
@@ -15,12 +16,12 @@ import {
 	DEFAULT_CURRENT_SURVEY_COMPANING_INDEX,
 	DEFAULT_CURRENT_SECTION_INDEX,
 	DEFAULT_PAGE_QUESTION_COUNT,
-} from "./const"
+} from "./const";
 
 type IParsedSurveyQuestion = ISurveyQuestion & {
-	index: number
-	children: IParsedSurveyQuestion[]
-}
+	index: number;
+	children: IParsedSurveyQuestion[];
+};
 
 // export type IParsedData = IData & {
 //   surveyCampanings: ISurveyCampaning &
@@ -32,9 +33,13 @@ type IParsedSurveyQuestion = ISurveyQuestion & {
 //     }[];
 // };
 
-export const getInitState = (data: IData | null, params: IParams): IState => {
+export const backendDataParser = (data: IBackendData) => data;
+
+export const getInitState = (data: IBackendData, params: IParams): IState => {
 	return {
-		data: data ? dataParser(data) : null,
+		// data: data ? dataParser(data) : null,
+		data: null,
+		backendData: backendDataParser(data),
 		loading: false,
 		error: {
 			status: false,
@@ -48,5 +53,5 @@ export const getInitState = (data: IData | null, params: IParams): IState => {
 		currentSectionIndex: DEFAULT_CURRENT_SECTION_INDEX,
 		params: params,
 		pageQuestionCount: DEFAULT_PAGE_QUESTION_COUNT,
-	}
-}
+	};
+};

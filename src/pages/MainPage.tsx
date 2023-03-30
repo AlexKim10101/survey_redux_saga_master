@@ -63,61 +63,66 @@ const MainPage: React.FC<IMainPage> = ({
 	selectSurveyCampaning,
 }) => {
 	const classes = useStyles();
+	console.log("MainPage");
 
 	const navigate = useNavigate();
-	return (
-		<div className={classes.root}>
-			<div className={classes.title}>
-				<Typography variant="body1" gutterBottom>
-					Список кампаний
-				</Typography>
-			</div>
-			<List component="nav" aria-label="secondary mailbox folders">
-				{surveyCampanings.map((campaning, index) => {
-					const campaningIsDone = isCampaningDone(campaning);
-					return (
-						<div key={index}>
-							<ListItem
-								onClick={() => {
-									selectSurveyCampaning(index);
-									navigate("campaning", {
-										state: { campaningId: campaning.id },
-									});
-								}}
-								button
-							>
-								{campaningIsDone ? (
-									<DoneIcon
-										style={{ color: "#52C41A" }}
-										className={classes.index}
-									/>
-								) : (
-									<div className={classes.doneIcon}>
-										<DoneIcon style={{ color: "#F5F5F5" }} />
-									</div>
-								)}
 
-								<ListItemText primary={campaning.name} secondary="" />
-								<ArrowForwardIosIcon
-									style={{
-										fontSize: 15,
-										marginLeft: 10,
-										color: "#757575",
-									}}
-								/>
-							</ListItem>
-							<Divider />
-						</div>
-					);
-				})}
-			</List>
-		</div>
-	);
+	return null;
+
+	// return (
+	// 	<div className={classes.root}>
+	// 		<div className={classes.title}>
+	// 			<Typography variant="body1" gutterBottom>
+	// 				Список опросов
+	// 			</Typography>
+	// 		</div>
+	// 		<List component="nav" aria-label="secondary mailbox folders">
+	// 			{surveyCampanings.map((campaning, index) => {
+	// 				// const campaningIsDone = isCampaningDone(campaning);
+	// 				return (
+	// 					<div key={index}>
+	// 						<ListItem
+	// 							onClick={() => {
+	// 								selectSurveyCampaning(index);
+	// 								navigate("campaning", {
+	// 									state: { campaningId: campaning.id },
+	// 								});
+	// 							}}
+	// 							button
+	// 						>
+	// 							{/* {campaningIsDone ? (
+	// 								<DoneIcon
+	// 									style={{ color: "#52C41A" }}
+	// 									className={classes.index}
+	// 								/>
+	// 							) : (
+	// 								<div className={classes.doneIcon}>
+	// 									<DoneIcon style={{ color: "#F5F5F5" }} />
+	// 								</div>
+	// 							)} */}
+
+	// 							<ListItemText primary={campaning.name} secondary="" />
+	// 							<ArrowForwardIosIcon
+	// 								style={{
+	// 									fontSize: 15,
+	// 									marginLeft: 10,
+	// 									color: "#757575",
+	// 								}}
+	// 							/>
+	// 						</ListItem>
+	// 						<Divider />
+	// 					</div>
+	// 				);
+	// 			})}
+	// 		</List>
+	// 	</div>
+	// );
 };
 
 const mapStateToProps = (state: IState) => {
-	const data = selectData(state);
-	return { surveyCampanings: data.surveyCampanings };
+	// const data = selectData(state);
+	// return { surveyCampanings: data.surveyCampanings };
+	return { surveyCampanings: [] };
 };
 
 const mapDispathToProps = (dispatch: Dispatch) => {

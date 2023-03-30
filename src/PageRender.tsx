@@ -18,13 +18,15 @@ const PageRender: React.FC<IPageRenderProps> = () => {
 		<Routes>
 			<Route path="/" element={<MainPage />} />
 			<Route path="/campaning" element={<SurveyCampaningPage />} />
-			<Route path="/section" element={<SectionPage showAnswer={false} />} />
-			<Route path="/question" element={<QuestionPage />} />
-			<Route path="/answer" element={<SectionPage showAnswer={true} />} />
-
-			<Route path="*" element={<div>not found</div>} />
+			<Route path="/page" element={<QuestionPage />} />
 		</Routes>
 	);
+
+	// <Route path="/campaning" element={<SurveyCampaningPage />} />
+	// 		<Route path="/section" element={<SectionPage showAnswer={false} />} />
+	// 		<Route path="/question" element={<QuestionPage />} />
+	// 		<Route path="/answer" element={<SectionPage showAnswer={true} />} />
+	// 		<Route path="*" element={<div>not found</div>} />
 
 	// switch (currentPage) {
 	//   case "main": {

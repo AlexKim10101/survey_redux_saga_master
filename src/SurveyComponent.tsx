@@ -5,10 +5,10 @@ import { CSSTransition, TransitionGroup } from "react-transition-group";
 import AppBarTop from "./components/appBarTop/AppBarTop";
 import AppBarBottom from "./components/appBarBottom/AppBarBottom";
 import PageRender from "./PageRender";
-import { TIMEOUT_VALUE } from "./utils/const";
+import { PAGENAME_PATHNAME_DICT, TIMEOUT_VALUE } from "./utils/const";
 import { IState } from "./duck/fakeData/surveyData";
 import "./styles/survey.css";
-import { useLocation } from "react-router-dom";
+import { redirect, useLocation, useNavigate } from "react-router-dom";
 import usePrevLocation from "./utils/usePrevLocation";
 import getSlideDirection from "./utils/getSlideDirection";
 import { IPathname } from "./survey.types";
@@ -17,6 +17,7 @@ type ISurveyComponentProps = ConnectedProps<typeof connector>;
 
 const SurveyComponent: React.FC<ISurveyComponentProps> = ({
 	isEmptyData,
+	currentPage,
 	fetchData,
 }) => {
 	const { pathname } = useLocation();
@@ -25,6 +26,16 @@ const SurveyComponent: React.FC<ISurveyComponentProps> = ({
 	const from = usePrevLocation(currentLocation);
 
 	const direction = getSlideDirection(from, currentLocation);
+
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		if (!isEmptyData) return;
+		console.log("redirect", PAGENAME_PATHNAME_DICT[currentPage]);
+		console.log();
+		navigate(PAGENAME_PATHNAME_DICT[currentPage]);
+		// navigate("/campaning");
+	}, [isEmptyData]);
 
 	useEffect(() => {
 		fetchData();
@@ -59,10 +70,10 @@ const SurveyComponent: React.FC<ISurveyComponentProps> = ({
 };
 
 const mapStateToProps = (state: IState) => {
-	const isEmptyData = !!state.data;
+	const isEmptyData = !!state.backendData;
 	return {
 		currentPage: state.currentPage,
-		slideMoveDirection: state.slideMoveDirection,
+		// slideMoveDirection: state.slideMoveDirection,
 		isEmptyData,
 	};
 };

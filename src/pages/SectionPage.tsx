@@ -100,6 +100,7 @@ const SectionPage: React.FC<ISectionPage> = ({
 			</span>
 		);
 	};
+
 	return (
 		<div className={classes.root}>
 			<div className={classes.title}>

@@ -12,7 +12,10 @@ import {
 } from "./types";
 import { ISurveyAction } from "./actions.types";
 import { IState } from "./fakeData/surveyData";
-import { questionValidation } from "../utils/questionValidation";
+import {
+	isQuestionDone,
+	questionValidation,
+} from "../utils/questionValidation";
 import { findPath } from "../utils/getPath";
 import { getValue, set } from "../utils/set";
 import {
@@ -28,6 +31,7 @@ import { selectCurrentSection } from "./selectors";
 
 const initialState: IState = {
 	data: null,
+	backendData: null,
 	loading: false,
 	error: {
 		status: false,
@@ -35,7 +39,7 @@ const initialState: IState = {
 	},
 	currentUserIndex: DEFAULT_CURRENT_USER_INDEX,
 	currentSurveyCampaningIndex: DEFAULT_CURRENT_SURVEY_COMPANING_INDEX,
-	currentPage: null,
+	currentPage: DEFAULT_CURRENT_PAGE,
 	currentQuestionIndex: DEFAULT_CURRENT_QUESTION_INDEX,
 	slideMoveDirection: DEFAULT_MOVE_DIRECTION,
 	currentSectionIndex: DEFAULT_CURRENT_SECTION_INDEX,
@@ -85,12 +89,17 @@ export const surveyReducer = (
 		}
 
 		case SET_CURRENT_SECTION_INDEX: {
+			// const questions =
+			// 	state.data!.surveyCampanings[state.currentSurveyCampaningIndex]
+			// 		.sections![action.payload.activeSectionIndex].questions;
+
 			const questions =
-				state.data!.surveyCampanings[state.currentSurveyCampaningIndex]
-					.sections![action.payload.activeSectionIndex].questions;
+				state.backendData!.pages![state.currentSectionIndex].questions;
+
 			const firstNotDoneQuestionIndex = questions.findIndex(
-				q => !q.questionDone
+				q => !isQuestionDone(q)
 			);
+
 			const currentQuestionIndex =
 				firstNotDoneQuestionIndex === -1
 					? questions.length - 1

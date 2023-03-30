@@ -1,63 +1,64 @@
 import { nanoid } from "nanoid";
+import { IBackendData } from "../../survey.types";
 
 export type IUser = {
-  name: string;
-  position: string;
-  department: string;
-  avatar: string;
+	name: string;
+	position: string;
+	department: string;
+	avatar: string;
 };
 
 export type IId = string;
 
 export type IParams = {
-  [key: string]: string;
+	[key: string]: string;
 };
 
 export type IQuestionType =
-  | "text"
-  | "checkbox"
-  | "radio"
-  | "rating"
-  | "select"
-  | "multiselect"
-  | "complex";
+	| "text"
+	| "checkbox"
+	| "radio"
+	| "rating"
+	| "select"
+	| "multiselect"
+	| "complex";
 
 export type ISurveyQuestion =
-  | IQuestion<"textMessage", null>
-  | IQuestion<"textQuestion", null>
-  | IQuestion<"checkbox", ISimpleChoise[]>
-  | IQuestion<"radio", ISimpleChoise[]>
-  | IQuestion<"rating", string[]>
-  | IQuestion<"complex", IId[]>;
+	| IQuestion<"textMessage", null>
+	| IQuestion<"textQuestion", null>
+	| IQuestion<"checkbox", ISimpleChoise[]>
+	| IQuestion<"radio", ISimpleChoise[]>
+	| IQuestion<"rating", string[]>
+	| IQuestion<"complex", IId[]>;
 
 type IQuestionAction = "toggleQuestion" | "toggleSection";
 
 export type IRule = {
-  action: IQuestionAction;
-  targetId: IId;
-  reasonValue: string;
+	action: IQuestionAction;
+	targetId: IId;
+	reasonValue: string;
 };
 
 export interface IQuestion<T, C> {
-  type: T;
-  choices: C;
-  userAnswer: IUserAnswer;
-  id: string;
-  questionText: string;
-  questionDone: boolean;
-  questionRequired: boolean;
-  isActive: boolean;
-  comment: boolean;
-  commentRequired: boolean;
-  commentValue: string;
-  validationError: boolean; //??
-  validationCommentError: boolean; //??
-  rules: IRule[];
+	type: T;
+	choices: C;
+	userAnswer: IUserAnswer;
+	id: string;
+	questionText: string;
+	questionDone: boolean;
+	questionRequired: boolean;
+	isActive: boolean;
+	comment: boolean;
+	commentRequired: boolean;
+	commentValue: string;
+	validationError: boolean; //??
+	validationCommentError: boolean; //??
+	rules: IRule[];
 }
 
 export interface IParsedQuestion<T, C, CHN> extends IQuestion<T, C> {
-  children: CHN;
-  index: number;
+	children: CHN;
+	index: number;
 }
 
 // export type IComplexQuestionChoise =
@@ -66,131 +67,132 @@ export interface IParsedQuestion<T, C, CHN> extends IQuestion<T, C> {
 //   | IParsedQuestion<"rating", string[], number, null>;
 
 export type ITextQuestion = IParsedQuestion<
-  "textQuestion",
-  null,
-  { [key: IId]: IParsedSurveyQuestion }
+	"textQuestion",
+	null,
+	{ [key: IId]: IParsedSurveyQuestion }
 >;
 export type ITextMessage = IParsedQuestion<
-  "textMessage",
-  null,
-  { [key: IId]: IParsedSurveyQuestion }
+	"textMessage",
+	null,
+	{ [key: IId]: IParsedSurveyQuestion }
 >;
 export type ICheckbox = IParsedQuestion<
-  "checkbox",
-  ISimpleChoise[],
-  { [key: IId]: IParsedSurveyQuestion }
+	"checkbox",
+	ISimpleChoise[],
+	{ [key: IId]: IParsedSurveyQuestion }
 >;
 export type IRadio = IParsedQuestion<
-  "radio",
-  ISimpleChoise[],
-  { [key: IId]: IParsedSurveyQuestion }
+	"radio",
+	ISimpleChoise[],
+	{ [key: IId]: IParsedSurveyQuestion }
 >;
 export type IRating = IParsedQuestion<
-  "rating",
-  string[],
-  { [key: IId]: IParsedSurveyQuestion }
+	"rating",
+	string[],
+	{ [key: IId]: IParsedSurveyQuestion }
 >;
 export type IComplex = IParsedQuestion<
-  "complex",
-  IId[],
-  { [key: IId]: IParsedSurveyQuestion }
+	"complex",
+	IId[],
+	{ [key: IId]: IParsedSurveyQuestion }
 >;
 
 export type IParsedSurveyQuestion =
-  | ITextQuestion
-  | ITextMessage
-  | ICheckbox
-  | IRadio
-  | IRating
-  | IComplex;
+	| ITextQuestion
+	| ITextMessage
+	| ICheckbox
+	| IRadio
+	| IRating
+	| IComplex;
 
 export type ISetAnswer = (q: IParsedSurveyQuestion) => void;
 
 export type ISimpleChoise = {
-  id: string;
-  answerText: string;
-  checked: boolean;
+	id: string;
+	answerText: string;
+	checked: boolean;
 };
 
 export type IUserAnswer = Omit<ISimpleChoise, "checked">[];
 
 export type ISection = {
-  id: string;
-  name: string;
-  progress: number;
-  allSectionsProgress: number;
-  isActive: boolean;
-  expanded: boolean;
-  disabled: boolean;
-  questions: ISurveyQuestion[];
+	id: string;
+	name: string;
+	progress: number;
+	allSectionsProgress: number;
+	isActive: boolean;
+	expanded: boolean;
+	disabled: boolean;
+	questions: ISurveyQuestion[];
 };
 
 export type IParsedSection = Omit<ISection, "questions"> & {
-  questions: IParsedSurveyQuestion[];
+	questions: IParsedSurveyQuestion[];
 };
 
 export type ISurveyCampaning = {
-  id: string;
-  name: string;
-  startDate: string;
-  endDate: string;
-  // тип прохождения списков вопросов: линейный или нелинейный questionListTypeLinear: boolean;
-  surveyType: "linear" | "nonlinear";
-  // возможность видеть ответы на пройденном листе вопросов questionListViewPreviousPage: boolean;
-  reviewStrict: boolean;
-  // возможность редактировать введенные ответы на пройденном листе вопросов questionListEditPreviousPage: boolean;
-  editingStrict: boolean;
-  campaningIsDone: boolean;
-  sections: ISection[];
+	id: string;
+	name: string;
+	startDate: string;
+	endDate: string;
+	// тип прохождения списков вопросов: линейный или нелинейный questionListTypeLinear: boolean;
+	surveyType: "linear" | "nonlinear";
+	// возможность видеть ответы на пройденном листе вопросов questionListViewPreviousPage: boolean;
+	reviewStrict: boolean;
+	// возможность редактировать введенные ответы на пройденном листе вопросов questionListEditPreviousPage: boolean;
+	editingStrict: boolean;
+	campaningIsDone: boolean;
+	sections: ISection[];
 };
 
 export type IParsedSurveyCampaning = Omit<ISurveyCampaning, "sections"> & {
-  sections: IParsedSection[];
+	sections: IParsedSection[];
 };
 
 export type IData = {
-  users: IUser[];
-  surveyCampanings: ISurveyCampaning[];
+	users: IUser[];
+	surveyCampanings: ISurveyCampaning[];
 };
 
 export type IParsedData = Omit<IData, "surveyCampanings"> & {
-  surveyCampanings: IParsedSurveyCampaning[];
+	surveyCampanings: IParsedSurveyCampaning[];
 };
 
 export type ISlideMoveDirection = "left-to-right" | "right-to-left";
 export type IPageName =
-  | "main"
-  | "surveyCampaning"
-  | "section"
-  | "question"
-  | "answer"
-  | "error";
+	| "main"
+	| "surveyCampaning"
+	| "section"
+	| "question"
+	| "answer"
+	| "error";
 
 export type IError = {
-  status: boolean;
-  message: string;
+	status: boolean;
+	message: string;
 };
 
 export type IState = {
-  loading: boolean;
-  error: IError;
-  data: IParsedData | null;
-  currentUserIndex: number;
-  currentSurveyCampaningIndex: number;
-  currentSectionIndex: number;
-  currentQuestionIndex: number;
-  currentPage: IPageName | null;
-  slideMoveDirection: ISlideMoveDirection;
-  params: IParams;
-  // relocate to section
-  pageQuestionCount: number;
+	loading: boolean;
+	error: IError;
+	data: IParsedData | null;
+	backendData: IBackendData | null;
+	currentUserIndex: number;
+	currentSurveyCampaningIndex: number;
+	currentSectionIndex: number;
+	currentQuestionIndex: number;
+	currentPage: IPageName;
+	slideMoveDirection: ISlideMoveDirection;
+	params: IParams;
+	// relocate to section
+	pageQuestionCount: number;
 };
 
 export type IQuestionProps = {
-  currentQuestionIndex: number;
-  questionId: string;
-  questionText: string;
-  setAnswer: (userAnswer: IUserAnswer) => void;
+	currentQuestionIndex: number;
+	questionId: string;
+	questionText: string;
+	setAnswer: (userAnswer: IUserAnswer) => void;
 };
 
 // export const data: IData = {
@@ -919,64 +921,64 @@ type IDataParser = (data: IData) => IParsedData;
 type IQuestionsDict = any;
 
 export type IQuestionChildren = {
-  [key: IId]: IParsedSurveyQuestion;
+	[key: IId]: IParsedSurveyQuestion;
 };
 
-export const dataParser: IDataParser = (data) => {
-  const campanings = data.surveyCampanings;
-  const parsedSurveyCampanings: IParsedSurveyCampaning[] = campanings.map(
-    (campany) => {
-      const sections = campany.sections;
-      const parsedSections = sections.map((section) => {
-        const questions = section.questions;
-        const questionsChildrenArr: IId[] = [];
-        const questionsDict: {
-          [key: IId]: IParsedSurveyQuestion;
-        } = questions.reduce(
-          (
-            dict: {
-              [key: IId]: IParsedSurveyQuestion;
-            },
-            question,
-            index
-          ) => {
-            //
-            dict[question.id] = {
-              ...question,
-              index,
-              children: {},
-            };
-            if (question.type === "complex") {
-              questionsChildrenArr.push(...question.choices);
-            }
-            return dict;
-          },
-          {}
-        );
+export const dataParser: IDataParser = data => {
+	const campanings = data.surveyCampanings;
+	const parsedSurveyCampanings: IParsedSurveyCampaning[] = campanings.map(
+		campany => {
+			const sections = campany.sections;
+			const parsedSections = sections.map(section => {
+				const questions = section.questions;
+				const questionsChildrenArr: IId[] = [];
+				const questionsDict: {
+					[key: IId]: IParsedSurveyQuestion;
+				} = questions.reduce(
+					(
+						dict: {
+							[key: IId]: IParsedSurveyQuestion;
+						},
+						question,
+						index
+					) => {
+						//
+						dict[question.id] = {
+							...question,
+							index,
+							children: {},
+						};
+						if (question.type === "complex") {
+							questionsChildrenArr.push(...question.choices);
+						}
+						return dict;
+					},
+					{}
+				);
 
-        const parsedQuestions: IParsedSurveyQuestion[] = [];
-        questions.forEach((question) => {
-          // заполняем поле children
-          if (question.type === "complex") {
-            questionsDict[question.id].children = question.choices.reduce(
-              (childrenDict: IQuestionChildren, id) => {
-                childrenDict[id] = questionsDict[id];
-                return childrenDict;
-              },
-              {}
-            );
-          }
-          // детей пропускаем
-          if (questionsChildrenArr.includes(question.id)) return;
-          parsedQuestions.push(questionsDict[question.id]);
-        });
+				const parsedQuestions: IParsedSurveyQuestion[] = [];
+				questions.forEach(question => {
+					// заполняем поле children
+					if (question.type === "complex") {
+						questionsDict[question.id].children = question.choices.reduce(
+							(childrenDict: IQuestionChildren, id) => {
+								childrenDict[id] = questionsDict[id];
+								return childrenDict;
+							},
+							{}
+						);
+					}
+					// детей пропускаем
+					if (questionsChildrenArr.includes(question.id)) return;
+					parsedQuestions.push(questionsDict[question.id]);
+				});
 
-        return { ...section, questions: parsedQuestions };
-      });
+				return { ...section, questions: parsedQuestions };
+			});
 
-      return { ...campany, sections: parsedSections };
-    }
-  );
+			return { ...campany, sections: parsedSections };
+		}
+	);
 
-  return { ...data, surveyCampanings: parsedSurveyCampanings };
+	return { ...data, surveyCampanings: parsedSurveyCampanings };
 };
