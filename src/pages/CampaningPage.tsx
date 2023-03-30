@@ -19,6 +19,7 @@ import { Dispatch } from "redux";
 import { setActiveSection } from "../duck";
 import { selectCurrentCampaning } from "../duck/selectors";
 import { useNavigate } from "react-router-dom";
+import { isQuestionDone } from "../utils/questionValidation";
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -71,24 +72,25 @@ const ColorButton = withStyles(() => ({
 export type ISurveyCampaningPage = ConnectedProps<typeof connector>;
 
 const SurveyCampaningPage: React.FC<ISurveyCampaningPage> = ({
-	sections,
+	pages,
 	selectSection,
 }) => {
 	const classes = useStyles();
 	const navigate = useNavigate();
 
+	console.log("SurveyCampaningPage");
+
 	return (
 		<div>
-			<ProgressLinear sections={sections} />
-
+			<ProgressLinear pages={pages} />
 			<div className={classes.root}>
-				{sections.map((section, index) => {
-					const allQuestionCount = section.questions.length;
-					const doneQuestionCount = section.questions.filter(
-						q => q.questionDone
+				{pages.map((page, index) => {
+					const allQuestionCount = page.questions.length;
+					const doneQuestionCount = page.questions.filter(q =>
+						isQuestionDone(q)
 					).length;
-					const requiredQuestionsCount = section.questions.filter(
-						q => q.questionRequired
+					const requiredQuestionsCount = page.questions.filter(
+						q => q.config.isRequired
 					).length;
 					return (
 						<Accordion
@@ -98,12 +100,12 @@ const SurveyCampaningPage: React.FC<ISurveyCampaningPage> = ({
 								disabled: classes.disabled,
 							}}
 							defaultExpanded={false}
-							disabled={section.disabled}
+							disabled={false}
 						>
 							<AccordionSummary
 								expandIcon={<ExpandMoreIcon />}
-								aria-controls={section.id}
-								id={section.id}
+								aria-controls={String(page.docID)}
+								id={String(page.docID)}
 							>
 								<ProgressCircular
 									progress={Math.floor(
@@ -112,7 +114,7 @@ const SurveyCampaningPage: React.FC<ISurveyCampaningPage> = ({
 								/>
 
 								<Typography className={classes.heading}>
-									{section.name}
+									section.title
 								</Typography>
 							</AccordionSummary>
 							<AccordionDetails className={classes.details}>
@@ -134,12 +136,12 @@ const SurveyCampaningPage: React.FC<ISurveyCampaningPage> = ({
 									size="small"
 									color="primary"
 									onClick={() => {
-										selectSection(index);
-										navigate("/section");
+										selectSection(index); // select page
+										navigate("/page");
 									}}
 									className={classes.margin}
 								>
-									{section.progress === 100 ? "Перейти" : "Перейти"}
+									Перейти
 								</ColorButton>
 							</AccordionDetails>
 						</Accordion>
@@ -150,10 +152,23 @@ const SurveyCampaningPage: React.FC<ISurveyCampaningPage> = ({
 	);
 };
 
+{
+	/* <ProgressCircular
+	progress={Math.floor((doneQuestionCount / allQuestionCount) * 100)}
+/>; */
+}
+
+// <ProgressLinear sections={sections} />;
+
+// {
+// 	section.progress === 100 ? "Перейти" : "Перейти";
+// }
 const mapStateToProps = (state: IState) => {
-	const currentCampaning = selectCurrentCampaning(state);
+	console.log(state);
+	// const currentCampaning = selectCurrentCampaning(state);
 	return {
-		sections: currentCampaning.sections,
+		// sections: currentCampaning.sections,
+		pages: state.backendData ? state.backendData.pages : [],
 	};
 };
 
