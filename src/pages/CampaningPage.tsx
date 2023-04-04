@@ -78,7 +78,7 @@ const SurveyCampaningPage: React.FC<ISurveyCampaningPage> = ({
 	const classes = useStyles();
 	const navigate = useNavigate();
 
-	console.log("SurveyCampaningPage");
+	// console.log("SurveyCampaningPage");
 
 	return (
 		<div>
@@ -99,7 +99,7 @@ const SurveyCampaningPage: React.FC<ISurveyCampaningPage> = ({
 								root: classes.root,
 								disabled: classes.disabled,
 							}}
-							defaultExpanded={false}
+							defaultExpanded={true}
 							disabled={false}
 						>
 							<AccordionSummary
@@ -114,7 +114,7 @@ const SurveyCampaningPage: React.FC<ISurveyCampaningPage> = ({
 								/>
 
 								<Typography className={classes.heading}>
-									section.title
+									страница {index + 1}
 								</Typography>
 							</AccordionSummary>
 							<AccordionDetails className={classes.details}>

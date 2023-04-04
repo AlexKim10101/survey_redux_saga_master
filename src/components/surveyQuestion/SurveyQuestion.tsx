@@ -1,181 +1,215 @@
 import React from "react";
-import QuestionCheckbox from "../surveyQuestionsTypes/QuestionCheckbox";
+// import QuestionCheckbox from "../surveyQuestionsTypes/QuestionCheckbox";
 import QuestionRadio from "../surveyQuestionsTypes/QuestionRadio";
-import QuestionRating from "../surveyQuestionsTypes/QuestionRating";
+// import QuestionRating from "../surveyQuestionsTypes/QuestionRating";
 import { makeStyles } from "@material-ui/core/styles";
 import "./styles/style.css";
 import {
-  IPageName,
-  IParsedQuestion,
-  IParsedSurveyQuestion,
-  ISetAnswer,
-  ISurveyQuestion,
-  IUserAnswer,
+	IPageName,
+	IParsedQuestion,
+	IParsedSurveyQuestion,
+	ISetAnswer,
+	ISurveyQuestion,
+	IUserAnswer,
 } from "../../duck/fakeData/surveyData";
 import TextField from "@material-ui/core/TextField";
 import QuestionText from "../surveyQuestionsTypes/QuestionText";
-import Message from "../surveyQuestionsTypes/Message";
-import ComplexQuestion from "../surveyQuestionsTypes/ComplexQuestion";
+// import Message from "../surveyQuestionsTypes/Message";
+// import ComplexQuestion from "../surveyQuestionsTypes/ComplexQuestion";
+import { IBackendQuestion } from "../../survey.types";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    overflow: "hidden",
-    padding: theme.spacing(0, 3),
-  },
-  surveyQuestionElementStyles: {
-    marginTop: "40px",
-  },
-  comment: {
-    "&.MuiFormControl-root": {
-      marginTop: "20px",
-    },
+const useStyles = makeStyles(theme => ({
+	root: {
+		flexGrow: 1,
+		overflow: "hidden",
+		padding: theme.spacing(0, 3),
+	},
+	surveyQuestionElementStyles: {
+		marginTop: "40px",
+	},
+	comment: {
+		"&.MuiFormControl-root": {
+			marginTop: "20px",
+		},
 
-    "& .MuiInputLabel-root": {
-      color: "#46ACAF",
-    },
-    "& .MuiFilledInput-root": {
-      border: "1px solid #46ACAF",
-      overflow: "hidden",
-      borderRadius: 4,
-      backgroundColor: "#fcfcfb",
-      transition: theme.transitions.create([
-        "border-color",
-        "background-color",
-        "box-shadow",
-      ]),
-      "&:hover": {
-        backgroundColor: "transparent",
-      },
-      "&.Mui-focused": {
-        backgroundColor: "transparent",
-        boxShadow: "#46ACAF",
-        borderColor: "#46ACAF",
-      },
-    },
-  },
+		"& .MuiInputLabel-root": {
+			color: "#46ACAF",
+		},
+		"& .MuiFilledInput-root": {
+			border: "1px solid #46ACAF",
+			overflow: "hidden",
+			borderRadius: 4,
+			backgroundColor: "#fcfcfb",
+			transition: theme.transitions.create([
+				"border-color",
+				"background-color",
+				"box-shadow",
+			]),
+			"&:hover": {
+				backgroundColor: "transparent",
+			},
+			"&.Mui-focused": {
+				backgroundColor: "transparent",
+				boxShadow: "#46ACAF",
+				borderColor: "#46ACAF",
+			},
+		},
+	},
 }));
 
 export type IGetSurveyQuestionProps = {
-  question: IParsedSurveyQuestion;
-  currentQuestionIndex: number;
-  setAnswer: ISetAnswer;
+	question: IBackendQuestion;
+	currentQuestionIndex: number;
+	setAnswer: ISetAnswer;
 };
 
 export const getSurveyQuestion: React.FC<IGetSurveyQuestionProps> = ({
-  question,
-  currentQuestionIndex,
-  setAnswer,
+	question,
+	currentQuestionIndex,
+	setAnswer,
 }) => {
-  switch (question.type) {
-    case "complex": {
-      return (
-        <ComplexQuestion
-          currentQuestionIndex={currentQuestionIndex}
-          question={question}
-          setAnswer={setAnswer}
-        />
-      );
-    }
-    case "textQuestion": {
-      return (
-        <QuestionText
-          currentQuestionIndex={currentQuestionIndex}
-          question={question}
-          setAnswer={setAnswer}
-        />
-      );
-    }
-    case "textMessage": {
-      return (
-        <Message
-          currentQuestionIndex={currentQuestionIndex}
-          question={question}
-          setAnswer={setAnswer}
-        />
-      );
-    }
+	const type = question.config.dataType;
+	console.log("!!!!!", type);
 
-    case "checkbox":
-      return (
-        <QuestionCheckbox
-          currentQuestionIndex={currentQuestionIndex}
-          question={question}
-          setAnswer={setAnswer}
-        />
-      );
+	switch (type) {
+		case "free": {
+			return (
+				<QuestionText
+					currentQuestionIndex={currentQuestionIndex}
+					question={question}
+					setAnswer={setAnswer}
+				/>
+			);
+		}
+		case "dropdown":
+		case "select": {
+			return (
+				<QuestionRadio
+					currentQuestionIndex={currentQuestionIndex}
+					question={question}
+					setAnswer={setAnswer}
+				/>
+			);
+		}
 
-    case "radio":
-      return (
-        <QuestionRadio
-          currentQuestionIndex={currentQuestionIndex}
-          question={question}
-          setAnswer={setAnswer}
-        />
-      );
+		// case 'multidropdown':
+		// case 'multiselect':{
+		// 		return (
+		// 			<QuestionCheckbox
+		// 				currentQuestionIndex={currentQuestionIndex}
+		// 				question={question}
+		// 				setAnswer={setAnswer}
+		// 			/>
+		// 		);
+		// }
 
-    case "rating":
-      return (
-        <QuestionRating
-          currentQuestionIndex={currentQuestionIndex}
-          question={question}
-          setAnswer={setAnswer}
-        />
-      );
+		// case "complex": {
+		// 	return (
+		// 		<ComplexQuestion
+		// 			currentQuestionIndex={currentQuestionIndex}
+		// 			question={question}
+		// 			setAnswer={setAnswer}
+		// 		/>
+		// 	);
+		// }
+		// case "textQuestion": {
+		// 	return (
+		// 		<QuestionText
+		// 			currentQuestionIndex={currentQuestionIndex}
+		// 			question={question}
+		// 			setAnswer={setAnswer}
+		// 		/>
+		// 	);
+		// }
+		// case "textMessage": {
+		// 	return (
+		// 		<Message
+		// 			currentQuestionIndex={currentQuestionIndex}
+		// 			question={question}
+		// 			setAnswer={setAnswer}
+		// 		/>
+		// 	);
+		// }
 
-    default:
-      return <div>Вопросов не найдено</div>;
-  }
+		// case "checkbox":
+		// 	return (
+		// 		<QuestionCheckbox
+		// 			currentQuestionIndex={currentQuestionIndex}
+		// 			question={question}
+		// 			setAnswer={setAnswer}
+		// 		/>
+		// 	);
+
+		// case "radio":
+		// 	return (
+		// 		<QuestionRadio
+		// 			currentQuestionIndex={currentQuestionIndex}
+		// 			question={question}
+		// 			setAnswer={setAnswer}
+		// 		/>
+		// 	);
+
+		// case "rating":
+		// 	return (
+		// 		<QuestionRating
+		// 			currentQuestionIndex={currentQuestionIndex}
+		// 			question={question}
+		// 			setAnswer={setAnswer}
+		// 		/>
+		// 	);
+
+		default:
+			return <div>Вопросов не найдено</div>;
+	}
 };
 
 export type ISurveyQuestionProps = {
-  questions: IParsedSurveyQuestion[];
-  currentQuestionIndex: number;
-  setAnswer: ISetAnswer;
-  setComment: (userComment: string) => void;
+	questions: IBackendQuestion[];
+	// currentQuestionIndex: number;
+	setAnswer: ISetAnswer;
+	setComment: (userComment: string) => void;
 };
 
 const SurveyQuestion: React.FC<ISurveyQuestionProps> = ({
-  questions,
-  currentQuestionIndex,
-  setAnswer,
-  setComment,
+	questions,
+	setAnswer,
+	setComment,
 }) => {
-  const classes = useStyles();
+	const classes = useStyles();
 
-  return (
-    <div>
-      <div className={classes.root}>
-        {questions.map((question, index) => (
-          <div key={index} className={classes.surveyQuestionElementStyles}>
-            {getSurveyQuestion({
-              question,
-              currentQuestionIndex: question.index,
-              setAnswer,
-            })}
+	return (
+		<div>
+			<div className={classes.root}>
+				{questions.map((question, index) => (
+					<div key={index} className={classes.surveyQuestionElementStyles}>
+						{getSurveyQuestion({
+							question,
+							currentQuestionIndex: index,
+							setAnswer,
+						})}
 
-            {question.comment && (
-              <TextField
-                id="outlined-multiline-static"
-                className={classes.comment}
-                InputProps={{ disableUnderline: true }}
-                label="Комментарий"
-                color="primary"
-                minRows="6"
-                fullWidth
-                multiline
-                variant="filled"
-                value={question.commentValue}
-                onChange={(e) => {
-                  setComment(e.target.value);
-                }}
-              />
-            )}
-          </div>
-        ))}
-      </div>
-    </div>
-  );
+						{/* {question.comment && (
+							<TextField
+								id="outlined-multiline-static"
+								className={classes.comment}
+								InputProps={{ disableUnderline: true }}
+								label="Комментарий"
+								color="primary"
+								minRows="6"
+								fullWidth
+								multiline
+								variant="filled"
+								value={question.commentValue}
+								onChange={e => {
+									setComment(e.target.value);
+								}}
+							/>
+						)} */}
+					</div>
+				))}
+			</div>
+		</div>
+	);
 };
 
 export default SurveyQuestion;

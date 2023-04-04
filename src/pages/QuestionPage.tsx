@@ -1,7 +1,6 @@
 import React, { useLayoutEffect, useRef } from "react";
 import SurveyQuestion from "../components/surveyQuestion/SurveyQuestion";
 import Typography from "@material-ui/core/Typography";
-import { CSSTransition, TransitionGroup } from "react-transition-group";
 import {
 	IPageName,
 	IParsedSurveyQuestion,
@@ -16,6 +15,7 @@ import { Dispatch } from "redux";
 import { applyRule, setUserAnswer, setUserComment } from "../duck";
 import { ruleIsActive } from "../utils/ruleIsActive";
 import { selectCurrentPage, selectCurrentSection } from "../duck/selectors";
+import { IBackendQuestion } from "../survey.types";
 
 export type IQuestionPage = ConnectedProps<typeof connector>;
 
@@ -41,9 +41,15 @@ const QuestionPage: React.FC<IQuestionPage> = ({
 		<div ref={ref} className="all">
 			<div className="title">
 				<Typography variant="body1" gutterBottom>
-					asdasdasd{name}
+					Page.title: {name}
 				</Typography>
 			</div>
+
+			<SurveyQuestion
+				questions={questions}
+				setAnswer={setAnswer}
+				setComment={setComment}
+			/>
 		</div>
 	);
 };
@@ -67,7 +73,9 @@ const mapStateToProps = (state: IState) => {
 
 const mapDispathToProps = (dispatch: Dispatch) => {
 	return {
-		setAnswer: (q: IParsedSurveyQuestion) => {
+		setAnswer: (q: IBackendQuestion, questionIndex: number) => {
+			dispatch(setUserAnswer({ question: q, questionIndex }));
+
 			// dispatch(
 			// 	setUserAnswer({
 			// 		userAnswer: q.userAnswer,

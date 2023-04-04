@@ -19,6 +19,7 @@ const SurveyComponent: React.FC<ISurveyComponentProps> = ({
 	isEmptyData,
 	currentPage,
 	fetchData,
+	currentSectionIndex,
 }) => {
 	const { pathname } = useLocation();
 
@@ -26,13 +27,14 @@ const SurveyComponent: React.FC<ISurveyComponentProps> = ({
 	const from = usePrevLocation(currentLocation);
 
 	const direction = getSlideDirection(from, currentLocation);
+	// console.log("direction", direction);
 
 	const navigate = useNavigate();
 
 	useEffect(() => {
 		if (!isEmptyData) return;
-		console.log("redirect", PAGENAME_PATHNAME_DICT[currentPage]);
-		console.log();
+		// console.log("redirect", PAGENAME_PATHNAME_DICT[currentPage]);
+		// console.log();
 		navigate(PAGENAME_PATHNAME_DICT[currentPage]);
 		// navigate("/campaning");
 	}, [isEmptyData]);
@@ -55,7 +57,7 @@ const SurveyComponent: React.FC<ISurveyComponentProps> = ({
 				}
 			>
 				<CSSTransition
-					key={pathname}
+					key={pathname + currentSectionIndex}
 					classNames="left-to-right"
 					timeout={{ enter: TIMEOUT_VALUE, exit: TIMEOUT_VALUE }}
 				>
@@ -71,8 +73,10 @@ const SurveyComponent: React.FC<ISurveyComponentProps> = ({
 
 const mapStateToProps = (state: IState) => {
 	const isEmptyData = !!state.backendData;
+	const { currentSectionIndex } = state;
 	return {
 		currentPage: state.currentPage,
+		currentSectionIndex,
 		// slideMoveDirection: state.slideMoveDirection,
 		isEmptyData,
 	};
@@ -89,3 +93,22 @@ const mapDispathToProps = (dispatch: Dispatch) => {
 const connector = connect(mapStateToProps, mapDispathToProps);
 
 export default connector(SurveyComponent);
+
+// <TransitionGroup
+// 	className="slider"
+// 	childFactory={child =>
+// 		React.cloneElement(child, {
+// 			classNames: direction,
+// 		})
+// 	}
+// >
+// 	<CSSTransition
+// 		key={pathname}
+// 		classNames="left-to-right"
+// 		timeout={{ enter: TIMEOUT_VALUE, exit: TIMEOUT_VALUE }}
+// 	>
+// 		<div className="slider-item">
+// 			<PageRender />
+// 		</div>
+// 	</CSSTransition>
+// </TransitionGroup>;

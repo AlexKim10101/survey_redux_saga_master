@@ -1,5 +1,5 @@
 import { nanoid } from "nanoid";
-import { IBackendData } from "../../survey.types";
+import { IBackendData, IBackendQuestion } from "../../survey.types";
 
 export type IUser = {
 	name: string;
@@ -105,7 +105,7 @@ export type IParsedSurveyQuestion =
 	| IRating
 	| IComplex;
 
-export type ISetAnswer = (q: IParsedSurveyQuestion) => void;
+export type ISetAnswer = (q: IBackendQuestion, questionIndex: number) => void;
 
 export type ISimpleChoise = {
 	id: string;

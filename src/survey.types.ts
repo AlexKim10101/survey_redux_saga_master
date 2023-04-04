@@ -44,6 +44,15 @@ export type IBackendQuestion = {
 	config: IConfig;
 };
 
+export type IOption = {
+	docID: number;
+	height: number;
+	order: number;
+	photoID: number;
+	title: string;
+	width: number;
+};
+
 export type IConfig = {
 	dataType: IDataType;
 	isConfirmable: boolean;
@@ -55,6 +64,7 @@ export type IConfig = {
 	isTimeLimited: boolean;
 	timeLimit: number;
 	title: string;
+	options?: IOption[];
 };
 
 export type IDataType =

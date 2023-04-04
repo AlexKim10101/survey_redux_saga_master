@@ -9,90 +9,96 @@ import FormLabel from "@material-ui/core/FormLabel";
 
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 import {
-  IRadio,
-  ISetAnswer,
-  ISimpleChoise,
-  IUserAnswer,
+	IRadio,
+	ISetAnswer,
+	ISimpleChoise,
+	IUserAnswer,
 } from "../../duck/fakeData/surveyData";
+import { IBackendQuestion, IOption } from "../../survey.types";
 
-const useStyles = makeStyles((theme) => ({
-  typography: {
-    fontSize: "22px",
-    color: "#000000!important",
-  },
+const useStyles = makeStyles(theme => ({
+	typography: {
+		fontSize: "22px",
+		color: "#000000!important",
+	},
 }));
 
 export type IQuestionRadio = {
-  currentQuestionIndex: number;
-  question: IRadio;
-  setAnswer: ISetAnswer;
+	currentQuestionIndex: number;
+	question: IBackendQuestion;
+	setAnswer: ISetAnswer;
 };
 
 const QuestionRadio: React.FC<IQuestionRadio> = ({
-  currentQuestionIndex,
-  question,
-  setAnswer,
+	currentQuestionIndex,
+	question,
+	setAnswer,
 }) => {
-  const classes = useStyles();
-  const { questionText, choices, userAnswer } = question;
-  const GreenRadio = withStyles({
-    root: {
-      color: "#46ACAF",
-      "&$checked": {
-        color: "##145d5f",
-      },
-    },
-    checked: {},
-  })((props: { choice: ISimpleChoise; userAnswer: IUserAnswer }) => {
-    const { choice, userAnswer, ...rest } = props;
-    const textFieldValue =
-      userAnswer.length === 0 ? "" : userAnswer[0].answerText;
-    return (
-      <Radio
-        color="default"
-        checked={choice.answerText === textFieldValue}
-        onChange={() =>
-          setAnswer({
-            ...question,
-            userAnswer: [{ id: choice.id, answerText: choice.answerText }],
-          })
-        }
-        {...rest}
-      />
-    );
-  });
+	const classes = useStyles();
+	const { title: questionText, config, answers } = question;
 
-  return (
-    <div>
-      <FormControl>
-        <FormLabel className={classes.typography} component="legend">
-          {currentQuestionIndex + 1}. {questionText}
-        </FormLabel>
-        <RadioGroup>
-          {choices.map((choicesItem, index) => {
-            return (
-              <div key={index}>
-                <FormControlLabel
-                  value={choicesItem.answerText}
-                  control={
-                    <GreenRadio choice={choicesItem} userAnswer={userAnswer} />
-                  }
-                  label={choicesItem.answerText}
-                />
-              </div>
-            );
-          })}
-        </RadioGroup>
-        {/* <FormHelperText>
+	const choices = config.options!;
+
+	const GreenRadio = withStyles({
+		root: {
+			color: "#46ACAF",
+			"&$checked": {
+				color: "##145d5f",
+			},
+		},
+		checked: {},
+	})((props: { choice: IOption; userAnswer: any }) => {
+		const { choice, userAnswer, ...rest } = props;
+		const textFieldValue = userAnswer.length === 0 ? "" : userAnswer[0].id;
+		return (
+			<Radio
+				color="default"
+				checked={choice.docID === textFieldValue}
+				onChange={() =>
+					setAnswer(
+						{
+							...question,
+							answers: [{ id: choice.docID, answerText: choice.title }],
+						},
+						currentQuestionIndex
+					)
+				}
+				{...rest}
+			/>
+		);
+	});
+
+	return (
+		<div>
+			<FormControl>
+				<FormLabel className={classes.typography} component="legend">
+					{currentQuestionIndex + 1}. {questionText}
+				</FormLabel>
+				<RadioGroup>
+					{choices.map((choicesItem, index) => {
+						return (
+							<div key={index}>
+								<FormControlLabel
+									value={choicesItem.title}
+									control={
+										<GreenRadio choice={choicesItem} userAnswer={answers} />
+									}
+									label={choicesItem.title}
+								/>
+							</div>
+						);
+					})}
+				</RadioGroup>
+				{/* <FormHelperText>
           Error text
         </FormHelperText> */}
-      </FormControl>
-      {/* {comment ? (
+			</FormControl>
+			{/* {comment ? (
           <SurveyComment
           />
         ) : null}  */}
-    </div>
-  );
+		</div>
+	);
 };
 
 export default QuestionRadio;

@@ -9,9 +9,9 @@ type IGetSlideDirection = (
 
 const getSlideDirection: IGetSlideDirection = (from, to) => {
 	const direction =
-		PATHNAME_PRIORITY_DICT[to] > PATHNAME_PRIORITY_DICT[from]
-			? "right-to-left"
-			: "left-to-right";
+		PATHNAME_PRIORITY_DICT[to] < PATHNAME_PRIORITY_DICT[from]
+			? "left-to-right"
+			: "right-to-left";
 	return direction;
 };
 

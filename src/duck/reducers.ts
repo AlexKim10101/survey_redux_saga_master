@@ -124,78 +124,99 @@ export const surveyReducer = (
 		}
 
 		case SET_USER_ANSWER: {
-			const currentSurveyCampaningIndex = state.currentSurveyCampaningIndex;
+			// const currentSurveyCampaningIndex = state.currentSurveyCampaningIndex;
 			const currentSectionIndex = state.currentSectionIndex;
-			const currentQuestionIndex = state.currentQuestionIndex;
+			// const currentQuestionIndex = state.currentQuestionIndex;
 			// const currentQuestionIndex: number = Number(action.payload.questionId);
 			// console.log("currentQuestionIndex1", currentQuestionIndex1);
 			// console.log("currentQuestionIndex", action.payload.questionId);
-			const { questionId, questionIndex, parentIndex, userAnswer } =
-				action.payload;
+			const { questionIndex, question } = action.payload;
 
-			const currentQuestion =
-				selectCurrentSection(state).questions[questionIndex];
+			// const currentQuestion =
+			// 	selectCurrentSection(state).questions[questionIndex];
 			// const currentQuestion = state.data!.surveyCampanings[
 			//   currentSurveyCampaningIndex
 			// ].sections[currentSectionIndex].questions[currentQuestionIndex];
 
-			const currentQuestionDone = questionValidation(
-				action.payload.userAnswer,
-				currentQuestion
-			);
-			const isChildrenAnswer = typeof parentIndex === "number";
+			// const currentQuestionDone = questionValidation(
+			// 	action.payload.userAnswer,
+			// 	currentQuestion
+			// );
+			// const isChildrenAnswer = typeof parentIndex === "number";
 
 			return {
 				...state,
-				data: {
-					...state.data!,
-					surveyCampanings: state.data!.surveyCampanings.map((item, index) => {
-						if (index === currentSurveyCampaningIndex) {
+				backendData: {
+					...state.backendData!,
+					pages: state.backendData!.pages.map((page, index) => {
+						if (index === currentSectionIndex) {
 							return {
-								...item,
-								sections: state.data!.surveyCampanings[
-									currentSurveyCampaningIndex
-								].sections.map((section, index) => {
-									if (index === currentSectionIndex) {
-										return {
-											...section,
-											questions: state.data!.surveyCampanings[
-												currentSurveyCampaningIndex
-											].sections[currentSectionIndex].questions.map(
-												(question, index) => {
-													if (index === questionIndex) {
-														if (isChildrenAnswer) {
-															return {
-																...question,
-																children: {
-																	...question.children,
-																	[questionId]: {
-																		...question.children[questionId],
-																		userAnswer: userAnswer,
-																		questionDone: currentQuestionDone,
-																	},
-																},
-															};
-														}
-														return {
-															...question,
-															userAnswer: userAnswer,
-															questionDone: currentQuestionDone,
-														};
-													}
-													return question;
-												}
-											),
-										};
+								...page,
+								questions: page.questions.map((q, index) => {
+									if (index === questionIndex) {
+										return question;
 									}
-									return section;
+									return q;
 								}),
 							};
 						}
-						return item;
+
+						return page;
 					}),
 				},
 			};
+
+			// return {
+			// 	...state,
+			// 	data: {
+			// 		...state.data!,
+			// 		surveyCampanings: state.data!.surveyCampanings.map((item, index) => {
+			// 			if (index === currentSurveyCampaningIndex) {
+			// 				return {
+			// 					...item,
+			// 					sections: state.data!.surveyCampanings[
+			// 						currentSurveyCampaningIndex
+			// 					].sections.map((section, index) => {
+			// 						if (index === currentSectionIndex) {
+			// 							return {
+			// 								...section,
+			// 								questions: state.data!.surveyCampanings[
+			// 									currentSurveyCampaningIndex
+			// 								].sections[currentSectionIndex].questions.map(
+			// 									(question, index) => {
+			// 										if (index === questionIndex) {
+			// 											if (isChildrenAnswer) {
+			// 												return {
+			// 													...question,
+			// 													children: {
+			// 														...question.children,
+			// 														[questionId]: {
+			// 															...question.children[questionId],
+			// 															userAnswer: userAnswer,
+			// 															questionDone: currentQuestionDone,
+			// 														},
+			// 													},
+			// 												};
+			// 											}
+			// 											return {
+			// 												...question,
+			// 												userAnswer: userAnswer,
+			// 												questionDone: currentQuestionDone,
+			// 											};
+			// 										}
+			// 										return question;
+			// 									}
+			// 								),
+			// 							};
+			// 						}
+			// 						return section;
+			// 					}),
+			// 				};
+			// 			}
+			// 			return item;
+			// 		}),
+			// 	},
+			// };
 		}
 		case SET_USER_COMMENT: {
 			const currentSurveyCampaningIndex = state.currentSurveyCampaningIndex;
